@@ -240,20 +240,28 @@ function App() {
             <div className="legend-section">
               <h4>EMOTIONAL</h4>
               <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#e91e63'}}></div>
+                <span>Vibrant</span>
+              </div>
+              <div className="legend-item">
                 <div className="color-box" style={{backgroundColor: '#ff6b35'}}></div>
                 <span>Exciting</span>
               </div>
               <div className="legend-item">
-                <div className="color-box" style={{backgroundColor: '#d32f2f'}}></div>
-                <span>Chaotic</span>
+                <div className="color-box" style={{backgroundColor: '#4caf50'}}></div>
+                <span>Fun</span>
+              </div>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#ff9800'}}></div>
+                <span>Busy</span>
+              </div>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#81c784'}}></div>
+                <span>Relaxed</span>
               </div>
               <div className="legend-item">
                 <div className="color-box" style={{backgroundColor: '#2196f3'}}></div>
                 <span>Calm</span>
-              </div>
-              <div className="legend-item">
-                <div className="color-box" style={{backgroundColor: '#757575'}}></div>
-                <span>Boring</span>
               </div>
             </div>
           </>

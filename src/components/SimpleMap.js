@@ -80,15 +80,98 @@ const SimpleMap = ({
     intensity: getTimeBasedIntensity(line.baseIntensity, timeOfDay)
   }));
 
-  // Emotional hotspots positioned within Singapore outline
-  const emotionalPoints = [
-    { x: 65, y: 65, emotion: 'exciting', color: '#ff6b35', intensity: 0.9, name: 'Marina Bay' },
-    { x: 55, y: 60, emotion: 'chaotic', color: '#d32f2f', intensity: 0.8, name: 'Orchard Road' },
-    { x: 45, y: 85, emotion: 'calm', color: '#2196f3', intensity: 0.6, name: 'Sentosa' },
-    { x: 70, y: 45, emotion: 'exciting', color: '#ff6b35', intensity: 0.7, name: 'Punggol' },
-    { x: 30, y: 65, emotion: 'boring', color: '#757575', intensity: 0.4, name: 'Jurong Industrial' },
-    { x: 75, y: 60, emotion: 'calm', color: '#2196f3', intensity: 0.5, name: 'Tampines' }
+  // Generate dynamic emotional patterns based on time of day
+  const getTimeBasedEmotion = (location, baseEmotion, timeOfDay) => {
+    // Different locations have different mood patterns throughout the day
+    const moodPatterns = {
+      'Marina Bay': {
+        'early_morning': 'calm',        // 6AM - peaceful, few people
+        'morning': 'busy',              // 9AM - office workers rushing
+        'lunch': 'exciting',            // 12PM - lunch crowd, events
+        'afternoon': 'busy',            // 3PM - meetings, business
+        'evening': 'exciting',          // 6PM - after-work socializing
+        'night': 'vibrant'              // 12AM - nightlife, bars
+      },
+      'Orchard Road': {
+        'early_morning': 'quiet',       // 6AM - shops closed, empty
+        'morning': 'busy',              // 9AM - commuters, opening shops
+        'lunch': 'chaotic',             // 12PM - shopping crowds
+        'afternoon': 'chaotic',         // 3PM - peak shopping time
+        'evening': 'exciting',          // 6PM - dining, entertainment
+        'night': 'vibrant'              // 12AM - late shopping, clubs
+      },
+      'Sentosa': {
+        'early_morning': 'calm',        // 6AM - peaceful beach
+        'morning': 'relaxed',           // 9AM - morning joggers
+        'lunch': 'fun',                 // 12PM - day tourists
+        'afternoon': 'fun',             // 3PM - peak tourist time
+        'evening': 'exciting',          // 6PM - sunset activities
+        'night': 'calm'                 // 12AM - quieter, some bars
+      },
+      'Punggol': {
+        'early_morning': 'calm',        // 6AM - residential quiet
+        'morning': 'busy',              // 9AM - residents commuting
+        'lunch': 'relaxed',             // 12PM - lunch at hawkers
+        'afternoon': 'boring',          // 3PM - quiet residential
+        'evening': 'relaxed',           // 6PM - families, parks
+        'night': 'calm'                 // 12AM - residential area
+      },
+      'Jurong Industrial': {
+        'early_morning': 'busy',        // 6AM - shift workers
+        'morning': 'busy',              // 9AM - work commute
+        'lunch': 'boring',              // 12PM - limited options
+        'afternoon': 'boring',          // 3PM - industrial area
+        'evening': 'quiet',             // 6PM - workers leaving
+        'night': 'dead'                 // 12AM - closed, empty
+      },
+      'Tampines': {
+        'early_morning': 'calm',        // 6AM - suburban quiet
+        'morning': 'busy',              // 9AM - commuter hub
+        'lunch': 'relaxed',             // 12PM - mall, food courts
+        'afternoon': 'relaxed',         // 3PM - shopping, families
+        'evening': 'fun',               // 6PM - dining, entertainment
+        'night': 'calm'                 // 12AM - residential wind-down
+      }
+    };
+
+    const emotionColors = {
+      'calm': '#2196f3',
+      'quiet': '#90caf9', 
+      'relaxed': '#81c784',
+      'boring': '#757575',
+      'busy': '#ff9800',
+      'chaotic': '#d32f2f',
+      'exciting': '#ff6b35',
+      'fun': '#4caf50',
+      'vibrant': '#e91e63',
+      'dead': '#424242'
+    };
+
+    const mood = moodPatterns[location]?.[timeOfDay] || baseEmotion;
+    return {
+      emotion: mood,
+      color: emotionColors[mood] || '#757575'
+    };
+  };
+
+  // Emotional hotspots with dynamic patterns
+  const baseEmotionalPoints = [
+    { x: 65, y: 65, baseEmotion: 'exciting', name: 'Marina Bay' },
+    { x: 55, y: 60, baseEmotion: 'chaotic', name: 'Orchard Road' },
+    { x: 45, y: 85, baseEmotion: 'calm', name: 'Sentosa' },
+    { x: 70, y: 45, baseEmotion: 'exciting', name: 'Punggol' },
+    { x: 30, y: 65, baseEmotion: 'boring', name: 'Jurong Industrial' },
+    { x: 75, y: 60, baseEmotion: 'calm', name: 'Tampines' }
   ];
+
+  const emotionalPoints = baseEmotionalPoints.map(point => {
+    const moodData = getTimeBasedEmotion(point.name, point.baseEmotion, timeOfDay);
+    return {
+      ...point,
+      emotion: moodData.emotion,
+      color: moodData.color
+    };
+  });
 
   const getTemperatureColor = (temp) => {
     if (temp < 26) return '#2196f3';
