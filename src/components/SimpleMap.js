@@ -145,7 +145,7 @@ const SimpleMap = ({
             top: '8%',
             left: '3%',
             width: '44%',
-            height: '40%'
+            height: '38%'
           }}>
             <h3 className="section-title">THERMAL MONITORING</h3>
             <p className="section-description">
@@ -174,7 +174,7 @@ const SimpleMap = ({
             top: '8%',
             right: '3%',
             width: '44%',
-            height: '40%'
+            height: '38%'
           }}>
             <h3 className="section-title">MRT TRANSIT FLOW</h3>
             <p className="section-description">
@@ -207,10 +207,10 @@ const SimpleMap = ({
           {/* Citizen Mood Data Section */}
           <div className="data-section emotion-section" style={{
             position: 'absolute',
-            bottom: '8%',
+            top: '54%',
             left: '3%',
             width: '44%',
-            height: '40%'
+            height: '38%'
           }}>
             <h3 className="section-title">CITIZEN MOOD TRACKER</h3>
             <p className="section-description">
@@ -243,13 +243,13 @@ const SimpleMap = ({
             </div>
           </div>
 
-          {/* Live Stats Section */}
+          {/* Smart Recommendations Section */}
           <div className="data-section stats-section" style={{
             position: 'absolute',
-            bottom: '8%',
+            top: '54%',
             right: '3%',
             width: '44%',
-            height: '40%'
+            height: '38%'
           }}>
             <h3 className="section-title">SMART RECOMMENDATIONS</h3>
             <p className="section-description">
