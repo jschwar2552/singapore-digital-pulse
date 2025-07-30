@@ -539,6 +539,11 @@ body {
   overflow-y: auto;
 }
 
+.stats-section .data-grid {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
 .data-item {
   font-size: 13px;
   color: #00ccff;

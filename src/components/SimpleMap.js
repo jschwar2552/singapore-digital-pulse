@@ -255,25 +255,26 @@ const SimpleMap = ({
             <p className="section-description">
               AI-powered location recommendations based on current conditions. Combines weather, transport, and mood data for optimal Singapore experiences.
             </p>
-            <div className="data-grid" style={{maxHeight: '200px', overflowY: 'auto'}}>
+            <div className="data-grid">
               {getSmartRecommendations(timeOfDay).map((rec, i) => (
                 <div key={`${rec.category}-${timeOfDay}`} className="data-item" style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  padding: '10px 0',
+                  padding: '8px 0',
                   borderBottom: i < getSmartRecommendations(timeOfDay).length - 1 ? '1px solid rgba(0, 255, 159, 0.2)' : 'none'
                 }}>
-                  <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px'}}>
-                    <span style={{fontSize: '14px', minWidth: '14px'}}>{rec.icon}</span>
-                    <span className="location-name" style={{fontSize: '12px', fontWeight: '700', textTransform: 'uppercase'}}>{rec.category}</span>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px'}}>
+                    <span style={{fontSize: '12px', minWidth: '12px'}}>{rec.icon}</span>
+                    <span className="location-name" style={{fontSize: '11px', fontWeight: '700', textTransform: 'uppercase'}}>{rec.category}</span>
                   </div>
                   <div style={{
-                    fontSize: '11px', 
+                    fontSize: '10px', 
                     color: '#00ccff', 
-                    lineHeight: '1.3',
-                    paddingLeft: '22px',
+                    lineHeight: '1.2',
+                    paddingLeft: '20px',
                     wordWrap: 'break-word',
-                    overflowWrap: 'break-word'
+                    overflowWrap: 'break-word',
+                    whiteSpace: 'normal'
                   }}>
                     {rec.recommendation}
                   </div>

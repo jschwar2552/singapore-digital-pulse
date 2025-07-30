@@ -18,6 +18,8 @@ function App() {
   const [showSoundscape, setShowSoundscape] = useState(true);
   const [autoPlay, setAutoPlay] = useState(false);
   const [layersCollapsed, setLayersCollapsed] = useState(false);
+  const [timeControlsCollapsed, setTimeControlsCollapsed] = useState(false);
+  const [legendCollapsed, setLegendCollapsed] = useState(false);
 
   // Load soundscape data on mount
   useEffect(() => {
@@ -66,30 +68,55 @@ function App() {
       </div>
 
       {/* Time Controls */}
-      <div className="time-controls">
-        <div className="time-display">
-          <span className="time">{currentTime.time}</span>
-          <span className="label">{currentTime.label}</span>
+      <div className="time-controls" style={{
+        height: timeControlsCollapsed ? '50px' : 'auto',
+        transition: 'height 0.3s ease',
+        overflow: 'hidden'
+      }}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: timeControlsCollapsed ? '0' : '10px'}}>
+          <div style={{fontSize: '9px', color: '#ff0080'}}>TEMPORAL CONTROL MK-XI</div>
+          <button 
+            onClick={() => setTimeControlsCollapsed(!timeControlsCollapsed)}
+            style={{
+              background: 'none',
+              border: '1px solid #00ccff',
+              color: '#00ccff',
+              padding: '3px 6px',
+              fontSize: '8px',
+              cursor: 'pointer',
+              fontFamily: 'Orbitron, monospace'
+            }}
+          >
+            {timeControlsCollapsed ? '⬆' : '⬇'}
+          </button>
         </div>
-        
-        <div className="time-slider">
-          {timeSequences.map((time, index) => (
-            <button
-              key={index}
-              className={`time-button ${index === currentTimeIndex ? 'active' : ''}`}
-              onClick={() => setCurrentTimeIndex(index)}
-            >
-              {time.time}
-            </button>
-          ))}
-        </div>
+        {!timeControlsCollapsed && (
+          <>
+            <div className="time-display">
+              <span className="time">{currentTime.time}</span>
+              <span className="label">{currentTime.label}</span>
+            </div>
+            
+            <div className="time-slider">
+              {timeSequences.map((time, index) => (
+                <button
+                  key={index}
+                  className={`time-button ${index === currentTimeIndex ? 'active' : ''}`}
+                  onClick={() => setCurrentTimeIndex(index)}
+                >
+                  {time.time}
+                </button>
+              ))}
+            </div>
 
-        <button 
-          className={`auto-play-button ${autoPlay ? 'active' : ''}`}
-          onClick={() => setAutoPlay(!autoPlay)}
-        >
-          {autoPlay ? '■ PAUSE' : '▶ AUTO PLAY'}
-        </button>
+            <button 
+              className={`auto-play-button ${autoPlay ? 'active' : ''}`}
+              onClick={() => setAutoPlay(!autoPlay)}
+            >
+              {autoPlay ? '■ PAUSE' : '▶ AUTO PLAY'}
+            </button>
+          </>
+        )}
       </div>
 
       {/* Layer Controls */}
@@ -162,50 +189,75 @@ function App() {
       />
 
       {/* Legend */}
-      <div className="legend">
-        <div className="legend-section">
-          <h4>THERMAL</h4>
-          <div className="legend-item">
-            <div className="color-box" style={{background: 'linear-gradient(to right, #2196f3, #ff9800, #f44336)'}}></div>
-            <span>20°C → 35°C</span>
-          </div>
+      <div className="legend" style={{
+        height: legendCollapsed ? '50px' : 'auto',
+        transition: 'height 0.3s ease',
+        overflow: 'hidden'
+      }}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: legendCollapsed ? '0' : '12px'}}>
+          <div style={{fontSize: '9px', color: '#ff00ff'}}>HARMONIC SPECTRUM</div>
+          <button 
+            onClick={() => setLegendCollapsed(!legendCollapsed)}
+            style={{
+              background: 'none',
+              border: '1px solid #ff00ff',
+              color: '#ff00ff',
+              padding: '3px 6px',
+              fontSize: '8px',
+              cursor: 'pointer',
+              fontFamily: 'Orbitron, monospace'
+            }}
+          >
+            {legendCollapsed ? '⬆' : '⬇'}
+          </button>
         </div>
-        
-        <div className="legend-section">
-          <h4>TRANSIT</h4>
-          <div className="legend-item">
-            <div className="color-box" style={{backgroundColor: '#d42e12'}}></div>
-            <span>North-South Line</span>
-          </div>
-          <div className="legend-item">
-            <div className="color-box" style={{backgroundColor: '#009639'}}></div>
-            <span>East-West Line</span>
-          </div>
-          <div className="legend-item">
-            <div className="color-box" style={{backgroundColor: '#fa9e0d'}}></div>
-            <span>Circle Line</span>
-          </div>
-        </div>
-        
-        <div className="legend-section">
-          <h4>EMOTIONAL</h4>
-          <div className="legend-item">
-            <div className="color-box" style={{backgroundColor: '#ff6b35'}}></div>
-            <span>Exciting</span>
-          </div>
-          <div className="legend-item">
-            <div className="color-box" style={{backgroundColor: '#d32f2f'}}></div>
-            <span>Chaotic</span>
-          </div>
-          <div className="legend-item">
-            <div className="color-box" style={{backgroundColor: '#2196f3'}}></div>
-            <span>Calm</span>
-          </div>
-          <div className="legend-item">
-            <div className="color-box" style={{backgroundColor: '#757575'}}></div>
-            <span>Boring</span>
-          </div>
-        </div>
+        {!legendCollapsed && (
+          <>
+            <div className="legend-section">
+              <h4>THERMAL</h4>
+              <div className="legend-item">
+                <div className="color-box" style={{background: 'linear-gradient(to right, #2196f3, #ff9800, #f44336)'}}></div>
+                <span>20°C → 35°C</span>
+              </div>
+            </div>
+            
+            <div className="legend-section">
+              <h4>TRANSIT</h4>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#d42e12'}}></div>
+                <span>North-South Line</span>
+              </div>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#009639'}}></div>
+                <span>East-West Line</span>
+              </div>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#fa9e0d'}}></div>
+                <span>Circle Line</span>
+              </div>
+            </div>
+            
+            <div className="legend-section">
+              <h4>EMOTIONAL</h4>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#ff6b35'}}></div>
+                <span>Exciting</span>
+              </div>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#d32f2f'}}></div>
+                <span>Chaotic</span>
+              </div>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#2196f3'}}></div>
+                <span>Calm</span>
+              </div>
+              <div className="legend-item">
+                <div className="color-box" style={{backgroundColor: '#757575'}}></div>
+                <span>Boring</span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
