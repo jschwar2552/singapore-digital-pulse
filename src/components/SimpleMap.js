@@ -10,12 +10,6 @@ const SimpleMap = ({
   timeOfDay = 'afternoon'
 }) => {
   const [animationFrame, setAnimationFrame] = useState(0);
-  const [collapsedPanels, setCollapsedPanels] = useState({
-    weather: false,
-    transport: false,
-    mood: false,
-    recommendations: false
-  });
 
   // Animation loop for dynamic effects
   useEffect(() => {
@@ -140,13 +134,6 @@ const SimpleMap = ({
     return recommendations[timeOfDay] || recommendations['afternoon'];
   };
 
-  const togglePanel = (panelName) => {
-    setCollapsedPanels(prev => ({
-      ...prev,
-      [panelName]: !prev[panelName]
-    }));
-  };
-
   return (
     <div className="simple-map">
       <div className="map-canvas">
@@ -158,48 +145,27 @@ const SimpleMap = ({
             top: '8%',
             left: '3%',
             width: '44%',
-            height: collapsedPanels.weather ? '60px' : '38%',
-            transition: 'height 0.3s ease'
+            height: '38%'
           }}>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
-              <h3 className="section-title" style={{margin: 0, fontSize: '14px'}}>THERMAL MONITORING</h3>
-              <button 
-                onClick={() => togglePanel('weather')}
-                style={{
-                  background: 'none',
-                  border: '1px solid #00ff9f',
-                  color: '#00ff9f',
-                  padding: '4px 8px',
-                  fontSize: '10px',
-                  cursor: 'pointer',
-                  fontFamily: 'Orbitron, monospace'
-                }}
-              >
-                {collapsedPanels.weather ? '⬆ EXPAND' : '⬇ MINIMIZE'}
-              </button>
-            </div>
-            {!collapsedPanels.weather && (
-              <>
-                <p className="section-description">
-                  NEA weather station network across Singapore districts. Real-time temperature monitoring from 8 key locations with 15-minute update intervals.
-                </p>
-                <div className="data-grid">
-                  {districts.slice(0, 4).map((district, i) => (
-                    <div key={`${district.name}-${timeOfDay}`} className="data-item" style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      padding: '12px 0',
-                      borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
-                    }}>
-                      <span className="location-name">{district.name}</span>
-                      <span className="temp-value" style={{color: getTemperatureColor(district.temp)}}>
-                        {district.temp}°C
-                      </span>
-                    </div>
-                  ))}
+            <h3 className="section-title">THERMAL MONITORING</h3>
+            <p className="section-description">
+              NEA weather station network across Singapore districts. Real-time temperature monitoring from 8 key locations with 15-minute update intervals.
+            </p>
+            <div className="data-grid">
+              {districts.slice(0, 4).map((district, i) => (
+                <div key={`${district.name}-${timeOfDay}`} className="data-item" style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '12px 0',
+                  borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
+                }}>
+                  <span className="location-name">{district.name}</span>
+                  <span className="temp-value" style={{color: getTemperatureColor(district.temp)}}>
+                    {district.temp}°C
+                  </span>
                 </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
 
           {/* Transport Data Section */}
@@ -208,55 +174,34 @@ const SimpleMap = ({
             top: '8%',
             right: '3%',
             width: '44%',
-            height: collapsedPanels.transport ? '60px' : '38%',
-            transition: 'height 0.3s ease'
+            height: '38%'
           }}>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
-              <h3 className="section-title" style={{margin: 0, fontSize: '14px'}}>MRT TRANSIT FLOW</h3>
-              <button 
-                onClick={() => togglePanel('transport')}
-                style={{
-                  background: 'none',
-                  border: '1px solid #00ff9f',
-                  color: '#00ff9f',
-                  padding: '4px 8px',
-                  fontSize: '10px',
-                  cursor: 'pointer',
-                  fontFamily: 'Orbitron, monospace'
-                }}
-              >
-                {collapsedPanels.transport ? '⬆ EXPAND' : '⬇ MINIMIZE'}
-              </button>
-            </div>
-            {!collapsedPanels.transport && (
-              <>
-                <p className="section-description">
-                  LTA transit monitoring system tracking passenger volume across major MRT lines. Data shows real-time capacity utilization and crowd levels.
-                </p>
-                <div className="data-grid">
-                  {mrtLines.slice(0, 4).map((line, i) => (
-                    <div key={`${line.line}-${timeOfDay}`} className="data-item" style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '12px 0',
-                      borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
-                    }}>
-                      <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
-                        <div style={{
-                          width: '20px',
-                          height: '6px',
-                          backgroundColor: line.color,
-                          borderRadius: '3px'
-                        }}></div>
-                        <span className="line-name">{line.line} Line</span>
-                      </div>
-                      <span className="intensity-value">{line.intensity}%</span>
-                    </div>
-                  ))}
+            <h3 className="section-title">MRT TRANSIT FLOW</h3>
+            <p className="section-description">
+              LTA transit monitoring system tracking passenger volume across major MRT lines. Data shows real-time capacity utilization and crowd levels.
+            </p>
+            <div className="data-grid">
+              {mrtLines.slice(0, 4).map((line, i) => (
+                <div key={`${line.line}-${timeOfDay}`} className="data-item" style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '12px 0',
+                  borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
+                }}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                    <div style={{
+                      width: '20px',
+                      height: '6px',
+                      backgroundColor: line.color,
+                      borderRadius: '3px'
+                    }}></div>
+                    <span className="line-name">{line.line} Line</span>
+                  </div>
+                  <span className="intensity-value">{line.intensity}%</span>
                 </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
 
           {/* Citizen Mood Data Section */}
@@ -265,58 +210,37 @@ const SimpleMap = ({
             top: '54%',
             left: '3%',
             width: '44%',
-            height: collapsedPanels.mood ? '60px' : '38%',
-            transition: 'height 0.3s ease'
+            height: '38%'
           }}>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
-              <h3 className="section-title" style={{margin: 0, fontSize: '14px'}}>CITIZEN MOOD TRACKER</h3>
-              <button 
-                onClick={() => togglePanel('mood')}
-                style={{
-                  background: 'none',
-                  border: '1px solid #00ff9f',
-                  color: '#00ff9f',
-                  padding: '4px 8px',
-                  fontSize: '10px',
-                  cursor: 'pointer',
-                  fontFamily: 'Orbitron, monospace'
-                }}
-              >
-                {collapsedPanels.mood ? '⬆ EXPAND' : '⬇ MINIMIZE'}
-              </button>
-            </div>
-            {!collapsedPanels.mood && (
-              <>
-                <p className="section-description">
-                  Singapore Soundscape Study (NTU 2019) tracking emotional responses across urban locations. Data from 67 participants mapping community sentiment and vibes.
-                </p>
-                <div className="data-grid">
-                  {emotionalPoints.slice(0, 4).map((point, i) => (
-                    <div key={`${point.name}-${timeOfDay}`} className="data-item" style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '12px 0',
-                      borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
-                    }}>
-                      <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
-                        <div style={{
-                          width: '16px',
-                          height: '16px',
-                          backgroundColor: point.color,
-                          borderRadius: '50%',
-                          animation: 'pulse 2s infinite'
-                        }}></div>
-                        <span className="location-name">{point.name}</span>
-                      </div>
-                      <span className="emotion-value" style={{color: point.color}}>
-                        {point.emotion.toUpperCase()}
-                      </span>
-                    </div>
-                  ))}
+            <h3 className="section-title">CITIZEN MOOD TRACKER</h3>
+            <p className="section-description">
+              Singapore Soundscape Study (NTU 2019) tracking emotional responses across urban locations. Data from 67 participants mapping community sentiment and vibes.
+            </p>
+            <div className="data-grid">
+              {emotionalPoints.slice(0, 4).map((point, i) => (
+                <div key={`${point.name}-${timeOfDay}`} className="data-item" style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '12px 0',
+                  borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
+                }}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                    <div style={{
+                      width: '16px',
+                      height: '16px',
+                      backgroundColor: point.color,
+                      borderRadius: '50%',
+                      animation: 'pulse 2s infinite'
+                    }}></div>
+                    <span className="location-name">{point.name}</span>
+                  </div>
+                  <span className="emotion-value" style={{color: point.color}}>
+                    {point.emotion.toUpperCase()}
+                  </span>
                 </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
 
           {/* Smart Recommendations Section */}
@@ -325,58 +249,37 @@ const SimpleMap = ({
             top: '54%',
             right: '3%',
             width: '44%',
-            height: collapsedPanels.recommendations ? '60px' : '38%',
-            transition: 'height 0.3s ease'
+            height: '38%'
           }}>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
-              <h3 className="section-title" style={{margin: 0, fontSize: '14px'}}>SMART RECOMMENDATIONS</h3>
-              <button 
-                onClick={() => togglePanel('recommendations')}
-                style={{
-                  background: 'none',
-                  border: '1px solid #00ff9f',
-                  color: '#00ff9f',
-                  padding: '4px 8px',
-                  fontSize: '10px',
-                  cursor: 'pointer',
-                  fontFamily: 'Orbitron, monospace'
-                }}
-              >
-                {collapsedPanels.recommendations ? '⬆ EXPAND' : '⬇ MINIMIZE'}
-              </button>
-            </div>
-            {!collapsedPanels.recommendations && (
-              <>
-                <p className="section-description">
-                  AI-powered location recommendations based on current conditions. Combines weather, transport, and mood data for optimal Singapore experiences.
-                </p>
-                <div className="data-grid" style={{maxHeight: '200px', overflowY: 'auto'}}>
-                  {getSmartRecommendations(timeOfDay).map((rec, i) => (
-                    <div key={`${rec.category}-${timeOfDay}`} className="data-item" style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      padding: '10px 0',
-                      borderBottom: i < getSmartRecommendations(timeOfDay).length - 1 ? '1px solid rgba(0, 255, 159, 0.2)' : 'none'
-                    }}>
-                      <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px'}}>
-                        <span style={{fontSize: '14px', minWidth: '14px'}}>{rec.icon}</span>
-                        <span className="location-name" style={{fontSize: '12px', fontWeight: '700', textTransform: 'uppercase'}}>{rec.category}</span>
-                      </div>
-                      <div style={{
-                        fontSize: '11px', 
-                        color: '#00ccff', 
-                        lineHeight: '1.3',
-                        paddingLeft: '22px',
-                        wordWrap: 'break-word',
-                        overflowWrap: 'break-word'
-                      }}>
-                        {rec.recommendation}
-                      </div>
-                    </div>
-                  ))}
+            <h3 className="section-title">SMART RECOMMENDATIONS</h3>
+            <p className="section-description">
+              AI-powered location recommendations based on current conditions. Combines weather, transport, and mood data for optimal Singapore experiences.
+            </p>
+            <div className="data-grid" style={{maxHeight: '200px', overflowY: 'auto'}}>
+              {getSmartRecommendations(timeOfDay).map((rec, i) => (
+                <div key={`${rec.category}-${timeOfDay}`} className="data-item" style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '10px 0',
+                  borderBottom: i < getSmartRecommendations(timeOfDay).length - 1 ? '1px solid rgba(0, 255, 159, 0.2)' : 'none'
+                }}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px'}}>
+                    <span style={{fontSize: '14px', minWidth: '14px'}}>{rec.icon}</span>
+                    <span className="location-name" style={{fontSize: '12px', fontWeight: '700', textTransform: 'uppercase'}}>{rec.category}</span>
+                  </div>
+                  <div style={{
+                    fontSize: '11px', 
+                    color: '#00ccff', 
+                    lineHeight: '1.3',
+                    paddingLeft: '22px',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word'
+                  }}>
+                    {rec.recommendation}
+                  </div>
                 </div>
-              </>
-            )}
+              ))}
+            </div>
           </div>
         </div>
 

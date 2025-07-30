@@ -17,6 +17,7 @@ function App() {
   const [showTransport, setShowTransport] = useState(true);
   const [showSoundscape, setShowSoundscape] = useState(true);
   const [autoPlay, setAutoPlay] = useState(false);
+  const [layersCollapsed, setLayersCollapsed] = useState(false);
 
   // Load soundscape data on mount
   useEffect(() => {
@@ -92,39 +93,61 @@ function App() {
       </div>
 
       {/* Layer Controls */}
-      <div className="layer-controls">
-        <h3>SENSOR STATUS: ACTIVE</h3>
-        <div className="layer-toggles">
-          <label className="layer-toggle">
-            <input
-              type="checkbox"
-              checked={showWeather}
-              onChange={(e) => setShowWeather(e.target.checked)}
-            />
-            <span className="weather-indicator"></span>
-            Weather Patterns
-          </label>
-          
-          <label className="layer-toggle">
-            <input
-              type="checkbox"
-              checked={showTransport}
-              onChange={(e) => setShowTransport(e.target.checked)}
-            />
-            <span className="transport-indicator"></span>
-            Transport Flow
-          </label>
-          
-          <label className="layer-toggle">
-            <input
-              type="checkbox"
-              checked={showSoundscape}
-              onChange={(e) => setShowSoundscape(e.target.checked)}
-            />
-            <span className="soundscape-indicator"></span>
-            Soundscape Emotions
-          </label>
+      <div className="layer-controls" style={{
+        height: layersCollapsed ? '50px' : 'auto',
+        transition: 'height 0.3s ease',
+        overflow: 'hidden'
+      }}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: layersCollapsed ? '0' : '12px'}}>
+          <h3 style={{margin: 0, fontSize: '10px'}}>SENSOR STATUS: ACTIVE</h3>
+          <button 
+            onClick={() => setLayersCollapsed(!layersCollapsed)}
+            style={{
+              background: 'none',
+              border: '1px solid #ffcc00',
+              color: '#ffcc00',
+              padding: '3px 6px',
+              fontSize: '8px',
+              cursor: 'pointer',
+              fontFamily: 'Orbitron, monospace'
+            }}
+          >
+            {layersCollapsed ? '⬆' : '⬇'}
+          </button>
         </div>
+        {!layersCollapsed && (
+          <div className="layer-toggles">
+            <label className="layer-toggle">
+              <input
+                type="checkbox"
+                checked={showWeather}
+                onChange={(e) => setShowWeather(e.target.checked)}
+              />
+              <span className="weather-indicator"></span>
+              Weather Patterns
+            </label>
+            
+            <label className="layer-toggle">
+              <input
+                type="checkbox"
+                checked={showTransport}
+                onChange={(e) => setShowTransport(e.target.checked)}
+              />
+              <span className="transport-indicator"></span>
+              Transport Flow
+            </label>
+            
+            <label className="layer-toggle">
+              <input
+                type="checkbox"
+                checked={showSoundscape}
+                onChange={(e) => setShowSoundscape(e.target.checked)}
+              />
+              <span className="soundscape-indicator"></span>
+              Soundscape Emotions
+            </label>
+          </div>
+        )}
       </div>
 
       {/* Map */}
