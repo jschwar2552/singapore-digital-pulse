@@ -260,16 +260,23 @@ const SimpleMap = ({
                 <div key={i} className="data-item" style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  padding: '15px 0',
-                  borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
+                  padding: '12px 0',
+                  borderBottom: i < getSmartRecommendations(timeOfDay).length - 1 ? '1px solid rgba(0, 255, 159, 0.2)' : 'none'
                 }}>
-                  <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px'}}>
-                    <span style={{fontSize: '16px'}}>{rec.icon}</span>
-                    <span className="location-name" style={{fontSize: '14px'}}>{rec.category}</span>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px'}}>
+                    <span style={{fontSize: '14px', minWidth: '14px'}}>{rec.icon}</span>
+                    <span className="location-name" style={{fontSize: '12px', fontWeight: '700', textTransform: 'uppercase'}}>{rec.category}</span>
                   </div>
-                  <span style={{fontSize: '12px', color: '#00ccff', lineHeight: '1.4'}}>
+                  <div style={{
+                    fontSize: '11px', 
+                    color: '#00ccff', 
+                    lineHeight: '1.3',
+                    paddingLeft: '22px',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word'
+                  }}>
                     {rec.recommendation}
-                  </span>
+                  </div>
                 </div>
               ))}
             </div>
