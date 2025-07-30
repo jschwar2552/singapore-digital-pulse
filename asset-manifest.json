@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/singapore-digital-pulse/static/css/main.67515766.css",
-    "main.js": "/singapore-digital-pulse/static/js/main.70b0b1a7.js",
+    "main.js": "/singapore-digital-pulse/static/js/main.d9465399.js",
     "static/js/453.ea69985e.chunk.js": "/singapore-digital-pulse/static/js/453.ea69985e.chunk.js",
     "index.html": "/singapore-digital-pulse/index.html",
     "main.67515766.css.map": "/singapore-digital-pulse/static/css/main.67515766.css.map",
-    "main.70b0b1a7.js.map": "/singapore-digital-pulse/static/js/main.70b0b1a7.js.map",
+    "main.d9465399.js.map": "/singapore-digital-pulse/static/js/main.d9465399.js.map",
     "453.ea69985e.chunk.js.map": "/singapore-digital-pulse/static/js/453.ea69985e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.67515766.css",
-    "static/js/main.70b0b1a7.js"
+    "static/js/main.d9465399.js"
   ]
 }
