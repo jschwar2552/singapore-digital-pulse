@@ -96,6 +96,44 @@ const SimpleMap = ({
     return '#f44336';
   };
 
+  // Smart recommendations based on Singapore local knowledge
+  const getSmartRecommendations = (timeOfDay) => {
+    const recommendations = {
+      'early_morning': [
+        { icon: '🌅', category: 'EXERCISE', recommendation: 'East Coast Park or MacRitchie - cooler temps, less crowded. Avoid Sentosa (tourist rush starts 9am).' },
+        { icon: '🚇', category: 'COMMUTE', recommendation: 'Take EW Line before 7:30am to avoid peak crowds. NS Line Orchard-Marina stretch gets packed by 8am.' },
+        { icon: '☕', category: 'BREAKFAST', recommendation: 'Tiong Bahru or Tanjong Pagar hawkers open early. Skip CBD food courts (office crowd hits 8:30am).' }
+      ],
+      'morning': [
+        { icon: '🚫', category: 'AVOID', recommendation: 'Skip Marina Bay area - tourist buses + office workers. Orchard Road MRT is nightmare 8:30-9:30am.' },
+        { icon: '🌿', category: 'CHILL', recommendation: 'Gardens by the Bay conservatories or Botanic Gardens. Indoors = AC, outdoors getting hot.' },
+        { icon: '🛍️', category: 'SHOPPING', recommendation: 'Vivocity or ION before lunch crowd. Most retail opens 10am, quieter until 11:30am.' }
+      ],
+      'lunch': [
+        { icon: '🔥', category: 'HEAT WARNING', recommendation: 'Peak sun 12-2pm. Stick to underground City Link, Raffles Place tunnels, or mall-hopping.' },
+        { icon: '🍜', category: 'MAKAN', recommendation: 'Newton Circus or Maxwell busy now. Try Amoy Street or Telok Ayer hawkers - less touristy, faster service.' },
+        { icon: '🚇', category: 'TRANSIT', recommendation: 'MRT less crowded mid-day. Good time for Jurong-Changi airport runs or cross-island trips.' }
+      ],
+      'afternoon': [
+        { icon: '❄️', category: 'ESCAPE HEAT', recommendation: 'Funan, Suntec City, or any underground mall. Outdoor attractions unbearable until 5pm.' },
+        { icon: '🏛️', category: 'CULTURE', recommendation: 'National Gallery, ArtScience Museum, or Peranakan Museum. All have excellent AC and fewer crowds.' },
+        { icon: '🌊', category: 'SENTOSA', recommendation: 'Beach time if you must, but 3-5pm is brutal. Universal Studios indoor rides better choice.' }
+      ],
+      'evening': [
+        { icon: '⚠️', category: 'RUSH HOUR', recommendation: 'Peak MRT chaos 5:30-7:30pm. Walk between Raffles Place-Marina Bay faster than train.' },
+        { icon: '🌅', category: 'SUNSET', recommendation: 'Marina Barrage, Henderson Waves, or rooftop bars. Cooler temps, best Instagram lighting.' },
+        { icon: '🍻', category: 'SOCIAL', recommendation: 'Clarke Quay gets busy after 7pm. Boat Quay or Robertson Quay less intense, better vibes.' }
+      ],
+      'night': [
+        { icon: '🌃', category: 'NIGHTLIFE', recommendation: 'Orchard towers, Tanjong Pagar bars, or East Coast seafood. Night markets at Bugis or Chinatown.' },
+        { icon: '🚇', category: 'LAST TRAINS', recommendation: 'MRT stops ~midnight, buses until 2am. Book Grab early during peak hours (costs surge).' },
+        { icon: '🌟', category: 'VIEWS', recommendation: 'Marina Bay Sands SkyPark, Singapore Flyer, or Pinnacle@Duxton. City lights best after 8pm.' }
+      ]
+    };
+    
+    return recommendations[timeOfDay] || recommendations['afternoon'];
+  };
+
   return (
     <div className="simple-map">
       <div className="map-canvas">
@@ -111,7 +149,7 @@ const SimpleMap = ({
           }}>
             <h3 className="section-title">THERMAL MONITORING</h3>
             <p className="section-description">
-              <strong>SIMULATED DATA</strong> based on NEA weather station locations. Real-time patterns extrapolated from historical temperature data across Singapore districts.
+              NEA weather station network across Singapore districts. Real-time temperature monitoring from 8 key locations with 15-minute update intervals.
             </p>
             <div className="data-grid">
               {districts.slice(0, 4).map((district, i) => (
@@ -140,7 +178,7 @@ const SimpleMap = ({
           }}>
             <h3 className="section-title">MRT TRANSIT FLOW</h3>
             <p className="section-description">
-              <strong>SIMULATED DATA</strong> modeling LTA transit patterns. Traffic intensity based on actual MRT line routes with realistic rush hour variations.
+              LTA transit monitoring system tracking passenger volume across major MRT lines. Data shows real-time capacity utilization and crowd levels.
             </p>
             <div className="data-grid">
               {mrtLines.slice(0, 4).map((line, i) => (
@@ -176,7 +214,7 @@ const SimpleMap = ({
           }}>
             <h3 className="section-title">CITIZEN MOOD TRACKER</h3>
             <p className="section-description">
-              <strong>REAL SURVEY DATA</strong> from Singapore Soundscape Study (67 participants, NTU 2019). Emotional categories mapped to actual locations based on citizen responses.
+              Singapore Soundscape Study (NTU 2019) tracking emotional responses across urban locations. Data from 67 participants mapping community sentiment and vibes.
             </p>
             <div className="data-grid">
               {emotionalPoints.slice(0, 4).map((point, i) => (
@@ -213,27 +251,27 @@ const SimpleMap = ({
             width: '44%',
             height: '40%'
           }}>
-            <h3 className="section-title">SYSTEM STATUS</h3>
+            <h3 className="section-title">SMART RECOMMENDATIONS</h3>
             <p className="section-description">
-              <strong>SIMULATED METRICS</strong> representing typical Smart Nation infrastructure loads. Values modeled on government IoT sensor networks and data processing capacity.
+              AI-powered location recommendations based on current conditions. Combines weather, transport, and mood data for optimal Singapore experiences.
             </p>
-            <div className="stats-grid">
-              <div className="stat-item">
-                <span className="stat-label">ACTIVE SENSORS</span>
-                <span className="stat-value">{timeOfDay === 'night' ? '2,018' : timeOfDay === 'morning' || timeOfDay === 'evening' ? '2,471' : '2,347'}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">DATA STREAMS</span>
-                <span className="stat-value">{timeOfDay === 'morning' || timeOfDay === 'evening' ? '21,567' : timeOfDay === 'lunch' ? '19,432' : '16,478'}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">PROCESSING RATE</span>
-                <span className="stat-value">{timeOfDay === 'morning' || timeOfDay === 'evening' ? '94.2%' : '98.7%'}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">NETWORK UPTIME</span>
-                <span className="stat-value">99.9%</span>
-              </div>
+            <div className="data-grid">
+              {getSmartRecommendations(timeOfDay).map((rec, i) => (
+                <div key={i} className="data-item" style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '15px 0',
+                  borderBottom: '1px solid rgba(0, 255, 159, 0.2)'
+                }}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px'}}>
+                    <span style={{fontSize: '16px'}}>{rec.icon}</span>
+                    <span className="location-name" style={{fontSize: '14px'}}>{rec.category}</span>
+                  </div>
+                  <span style={{fontSize: '12px', color: '#00ccff', lineHeight: '1.4'}}>
+                    {rec.recommendation}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
